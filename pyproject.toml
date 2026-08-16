@@ -1,0 +1,24 @@
+[project]
+name = "project-2025"
+version = "1.0.0"
+description = "A cryptographic core manager with custom GTK interfaces and local storage verification"
+readme = "README.md"
+requires-python = ">=3.14"
+authors = [
+    { name = "lifer-x" }
+]
+keywords = ["cryptography", "gtk", "vigenere", "desktop", "utility"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Topic :: Security :: Cryptography"
+]
+
+dependencies = [
+    "PyGObject>=3.40.0",
+    "python-dotenv>=1.0.0"
+]
+
+[tool.uv]
+managed = true

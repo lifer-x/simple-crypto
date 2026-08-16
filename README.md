@@ -1,60 +1,55 @@
-# 🔐 PyGTK Cryptor Suite
+# 🔐 project-2025
 
-A secure, desktop-based graphical application for multi-layered message encryption and decryption. Built with **Python 3**, **PyGTK (GTK 3)**, and **python-dotenv**, this suite leverages an enhanced, multi-pass Vigenere cipher architecture with dynamic key generation, cryptographic salting, and local `.env` session synchronization.
+A graphical desktop application built with PyGTK (GTK 3) for multi-layered message encryption and decryption. The project implements a modified Vigenere cipher architecture featuring dynamic secret key generation, cryptographic salting (noise-buffering), and local `.env` session synchronization.
+
+The environment and runtimes are fully managed and automated using **uv**.
+
+---
 
 ## ✨ Features
-* **Multi-Layered Cipher**: Protects payloads through 3 distinct passes of encryption/decryption utilizing separate public and dynamically generated secret keys.
-* **Cryptographic Salting**: Appends a random 97-character noise-buffer to message payloads before full-pass encryption to mitigate frequency analysis vulnerabilities.
-* **Dynamic Key Management**: Automatically provisions cryptographically secure 24-character session keys locally stored as encrypted variables using `python-dotenv`.
-* **Native Cross-Platform GUI**: Built with PyGTK (GTK 3) widgets featuring responsive window scaling and input/output handlers.
-* **Bilingual Support**: Fully operational across both Latin (26-character) and Cyrillic (32-character) alphabetic structures.
+
+* **Multi-Layered Cipher:** Protects payloads through three distinct passes of encryption/decryption utilizing separate public and dynamically generated secret keys.
+* **Cryptographic Salting:** Appends a random 97-character noise-buffer to message payloads before full-pass encryption to mitigate frequency analysis vulnerabilities.
+* **Local Key Manager:** Automatically provisions a cryptographically secure 20-character session key locally stored as an encrypted variable via `python-dotenv`.
+* **Reusable UI Interface:** Features a modular `CryptoInterface` (GTK 3) component inside `ui.py` that dynamically accepts button labels and handles hot-swapped cryptographic action triggers.
+* **Bilingual Support:** Fully operational across both Latin (ASCII), digits, punctuation marks, and Cyrillic alphabet structures.
+
+---
 
 ## 📁 Repository Structure
-* `encrypt.py` — Graphical entryway containing core UI elements and routines to handle message encryption and dynamic key staging.
-* `decrypt.py` — Symmetrical desktop interface performing state reversing, character trimming, and payload recovery.
-* `.env` — Local persistent database managing encrypted session keys.
 
-## 🚀 Getting Started
+* `core.py` — Core cryptographic matrix handling Vigenere rounds, layering, and salting arrays.
+* `storage.py` — Local key manager synchronizing runtime bytes with a filesystem `.env` database.
+* `ui.py` — Abstracted PyGTK window container rendering fields and linking callback triggers.
+* `encryptor.py` — Application entryway initializing the encryption pipeline and dynamic key staging.
+* `decryptor.py` — Symmetrical desktop interface performing state reversing, character trimming, and payload recovery.
+* `pyproject.toml` — Configuration file defining project metadata and managed dependencies for `uv`.
+* `.env` — Local persistent database managing encrypted session keys (generated automatically).
 
-### Prerequisites
-Ensure your local environment runs **Python 3.8+** with native GTK 3 system libraries.
+---
 
-*On Ubuntu/Debian:*
+## 🚀 Quick Start
+
+To launch the application, execute these commands in your terminal:
+
 ```bash
-sudo apt install python3-gi python3-gi-cairo gir1.2-gtk-3.0
+# 1. Clone the repository and navigate into the application root
+git clone https://github.com/lifer-x/simple-crypto
+cd simple-crypto
+
+# 2. Run the encryption workspace
+uv run python encryptor.py
+
+# 3. Or run the decryption workspace
+uv run python decryptor.py
 ```
 
-### Installation
-1. Clone the repository workspace:
-   ```bash
-   git clone https://github.com
-   ```
-2. Navigate into the application root:
-   ```bash
-   cd your-repo-name
-   ```
-3. Install required runtime packaging dependencies:
-   ```bash
-   pip install python-dotenv
-   ```
+---
 
 ## 🎮 How It Works
 
-### Encryption
-1. Launch the encryption pipeline:
-   ```bash
-   python3 encrypt.py
-   ```
-2. Enter your raw text string and hit **Encrypt**.
-3. The engine generates a unique `secret_key`, encrypts it against the system `PUBLIC_KEY`, saves it to `.env`, salts your text with 97 characters, and encodes the complete block.
-
-### Decryption
-1. Launch the decryption pipeline:
-   ```bash
-   python3 decrypt.py
-   ```
-2. Paste the encrypted cipher-text block and click **Decrypt**.
-3. The system maps matching key indicators, removes the 97-character noise block, and prints the recovered plaintext message into the input field.
+* **Encryption (`encryptor.py`):** Enter raw string data and click **Encrypt**. The system automatically seeds an encrypted `_secret_key` hook inside `.env` (if no active session data exists), appends a 97-character salt tail, and returns the final cipher-text block directly into the entry field.
+* **Decryption (`decryptor.py`):** Paste the cipher-text array block and click **Decrypt**. The underlying logic fetches token records via `storage`, strips the 97-character salt tail, and returns the original message into the entry field.
 
 ---
-🔐 *Engineered for lightweight, secure, and clean desktop cryptography execution.*
+_Engineered for lightweight, secure, and clean desktop cryptography execution._
